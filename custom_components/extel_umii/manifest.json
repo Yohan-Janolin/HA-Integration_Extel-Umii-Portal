@@ -1,9 +1,9 @@
 {
   "domain": "extel_umii",
-  "name": "Extel Portail",
-  "codeowners": ["@jasonpretavoine"],
+  "name": "Extel-Advisen Gate Motor via Umii - v2",
+  "codeowners": ["@jasonpretavoine", "@yohan-janolin"],
   "config_flow": true,
-  "documentation": "https://github.com/jasonpretavoine/Extel-HomeAssistant/",
+  "documentation": "https://github.com/Yohan-Janolin/HA-Integration_Extel-Umii-Portal/",
   "iot_class": "cloud_polling",
-  "version": "1.0.5"
+  "version": "2.0.0"
 }
