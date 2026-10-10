@@ -1,4 +1,6 @@
-# 🚪 Extel Umii pour Home Assistant (Bêta)
+# 🚪 Extel Umii pour Home Assistant
+
+Basé sur l'excellent travail de `https://github.com/jasonpretavoine/Extel-HomeAssistant`
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
