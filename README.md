@@ -25,8 +25,8 @@ Cette intégration personnalisée permet de piloter les portails motorisés des 
 Cette intégration est un projet communautaire **non-officiel**. Elle n'est ni affiliée, ni approuvée par **Extel** ou **Avidsen**. L'utilisation de cette intégration se fait à vos propres risques et périls.
 
 Pour fonctionner, il est maintenant recommandé d'utiliser le **deviceId** généré par l'application mobile.  
-De plus, le UserAgent attendu par **Umii** possède une version.  
-Il faut donc récupérer ces 2 informations en examinant les trames envoyées par l'application iOS ou Android.  
+De plus, le **UserAgent** attendu par **Umii** possède une version.  
+Il faut donc récupérer ces 2 informations en examinant les trames envoyées par l'application iOS ou Android (voir explications plus bas).  
 
 ---
 
