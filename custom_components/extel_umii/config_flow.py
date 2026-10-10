@@ -29,12 +29,14 @@ class ExtelConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema({
                 vol.Required(CONF_EMAIL): str,
                 vol.Required(CONF_PASSWORD): str,
+                vol.Optional(CONF_DEVICE_ID): str,
+                vol.Optional(CONF_DEVICE_TOKEN): str,
             }),
             errors=errors
         )
 
     async def async_step_select_gate(self, user_input=None):
-        api = ExtelUmiiAPI(self._email, self._password, self._device_id)
+        api = ExtelUmiiAPI(self._email, self._password, self._device_id, user_input.get(CONF_DEVICE_TOKEN))
         await api.login()
         gates = await api.get_gates()
 

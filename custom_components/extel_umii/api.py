@@ -1,6 +1,6 @@
 import aiohttp
 import logging
-from .const import DEFAULT_HEADERS
+from .const import DEFAULT_HEADERS, DEFAULT_USER_AGENT
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -8,12 +8,20 @@ VALID_GATE_STATES = {"closed", "open", "opening", "closing", "unknown"}
 
 
 class ExtelUmiiAPI:
-    def __init__(self, email, password, device_id):
+    def __init__(self, email, password, device_id, device_token=None, user_agent=None):
         self.email = email
         self.password = password
         self.device_id = device_id
+        self.device_token = device_token
+        self.user_agent = user_agent or DEFAULT_USER_AGENT
         self.token = None
         self.base_url = "https://umii.avidsen.one/services"
+
+    def _headers(self, extra=None):
+        headers = {**DEFAULT_HEADERS, "User-Agent": self.user_agent}
+        if extra:
+            headers.update(extra)
+        return headers
 
     async def login(self):
         url = f"{self.base_url}/dain/login"
@@ -23,22 +31,25 @@ class ExtelUmiiAPI:
             "stayConnected": "on",
             "deviceID": self.device_id,
             "deviceOS": "IOS",
-            "deviceType": "iPhone13,4"
+            "deviceType": "iPhone18,2",
         }
+        if self.device_token:
+            payload["deviceToken"] = self.device_token
+
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=payload, headers=DEFAULT_HEADERS) as resp:
+            async with session.post(url, json=payload, headers=self._headers()) as resp:
                 if resp.status == 200:
                     data = await resp.json()
                     self.token = data.get("token")
                     return True
-                _LOGGER.warning("Extel login failed with HTTP status %s", resp.status)
+                body = await resp.text()
+                _LOGGER.warning("Extel login failed HTTP %s — body: %s", resp.status, body)
                 return False
 
     async def get_gates(self):
         url = f"{self.base_url}/durin/my/objects?all=true"
-        headers = {**DEFAULT_HEADERS, "Authorization": f"Bearer {self.token}"}
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers=headers) as resp:
+            async with session.get(url, headers=self._headers({"Authorization": f"Bearer {self.token}"})) as resp:
                 if resp.status == 200:
                     data = await resp.json()
                     content = data.get("content", [])
@@ -62,7 +73,7 @@ class ExtelUmiiAPI:
 
         async with aiohttp.ClientSession() as session:
             for attempt in range(2):
-                headers = {**DEFAULT_HEADERS, "Authorization": f"Bearer {self.token}"}
+                headers = self._headers({"Authorization": f"Bearer {self.token}"})
                 async with session.put(url, json=payload, headers=headers) as resp:
                     ok = resp.status in [200, 204]
                     if ok:
@@ -81,7 +92,7 @@ class ExtelUmiiAPI:
         url = f"{self.base_url}/durin/my/objects/{gate_id}"
         async with aiohttp.ClientSession() as session:
             for attempt in range(2):
-                headers = {**DEFAULT_HEADERS, "Authorization": f"Bearer {self.token}"}
+                headers = self._headers({"Authorization": f"Bearer {self.token}"})
                 async with session.get(url, headers=headers) as resp:
                     if resp.status == 401 and attempt == 0 and await self.login():
                         continue
