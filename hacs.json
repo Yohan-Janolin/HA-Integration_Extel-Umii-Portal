@@ -1,5 +1,5 @@
 {
-  "name": "Extel Umii Portail",
+  "name": "Extel-Advisen Gate Motor via Umii - v2",
   "content_type": "integration",
   "domains": ["extel_umii"],
   "iot_class": "cloud_polling",
