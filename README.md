@@ -17,6 +17,7 @@ Cette intégration personnalisée permet de piloter les portails motorisés des 
 * **Ouverture Piéton** : Un bouton dédié pour l'ouverture partielle (`HALF-OPEN`).
 * **Retour d'État** : Suivi en temps réel de l'état du portail (Ouvert/Fermé).
 * **Multi-Appareils** : Détection et installation automatique de tous les portails liés à votre compte.
+* **Gestion des erreurs de connexion (v2.0.1)** : Retente automatiquement la connexion en cas d'erreurs non-bloquantes (comme une erreur de DNS par exemple)
 
 ---
 

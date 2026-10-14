@@ -15,6 +15,7 @@ class ExtelUmiiAPI:
         self.device_token = device_token
         self.user_agent = user_agent or DEFAULT_USER_AGENT
         self.token = None
+        self.last_login_status = None
         self.base_url = "https://umii.avidsen.one/services"
 
     def _headers(self, extra=None):
@@ -38,6 +39,7 @@ class ExtelUmiiAPI:
 
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=payload, headers=self._headers()) as resp:
+                self.last_login_status = resp.status
                 if resp.status == 200:
                     data = await resp.json()
                     self.token = data.get("token")

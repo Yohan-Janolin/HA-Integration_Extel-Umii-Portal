@@ -1,6 +1,10 @@
+import asyncio
+
+import aiohttp
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.const import CONF_EMAIL, CONF_PASSWORD
+from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 
 from .const import DOMAIN, CONF_DEVICE_ID, CONF_DEVICE_TOKEN, CONF_USER_AGENT, DEFAULT_USER_AGENT
 from .api import ExtelUmiiAPI
@@ -16,7 +20,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data.get(CONF_USER_AGENT, DEFAULT_USER_AGENT),
     )
 
-    await api.login()
+    try:
+        logged_in = await api.login()
+    except (aiohttp.ClientError, asyncio.TimeoutError, OSError) as err:
+        raise ConfigEntryNotReady(
+            f"Impossible de joindre l'API Umii : {err}"
+        ) from err
+
+    if not logged_in:
+        if api.last_login_status in (401, 403):
+            raise ConfigEntryAuthFailed("Identifiants Umii refusés")
+        raise ConfigEntryNotReady(
+            f"Connexion Umii échouée (HTTP {api.last_login_status})"
+        )
+
     coordinator = ExtelGateCoordinator(hass, api, entry.data["gate_id"])
     await coordinator.async_config_entry_first_refresh()
 

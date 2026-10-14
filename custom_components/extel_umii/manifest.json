@@ -5,5 +5,5 @@
   "config_flow": true,
   "documentation": "https://github.com/Yohan-Janolin/HA-Integration_Extel-Umii-Portal/",
   "iot_class": "cloud_polling",
-  "version": "2.0.0"
+  "version": "2.0.1"
 }
