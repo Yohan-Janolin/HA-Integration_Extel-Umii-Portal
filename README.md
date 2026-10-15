@@ -37,13 +37,8 @@ Cette intégration personnalisée permet de piloter les portails motorisés des 
 
 ### Méthode 1 : HACS (Recommandé)
 
-1.  Assurez-vous que [HACS](https://hacs.xyz/) est installé.
-2.  Allez dans **HACS** > **Intégrations**.
-3.  Cliquez sur les **3 points** en haut à droite et choisissez **Dépôts personnalisés**.
-4.  Collez l'URL de ce dépôt : `https://github.com/Yohan-Janolin/HA-Integration_Extel-Umii-Portal`.
-5.  Sélectionnez la catégorie **Intégration** et cliquez sur **Ajouter**.
-6.  Cherchez **Extel Umii** dans la liste et cliquez sur **Télécharger**.
-7.  **Redémarrez Home Assistant**.
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Yohan-Janolin&repository=HA-Integration_Extel-Umii-Portal&category=integration)
+
 
 ### Méthode 2 : Manuelle
 
