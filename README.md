@@ -4,7 +4,7 @@ Based on the excellent work of [Jason Pretavoine](https://github.com/jasonpretav
 Original repository: [https://github.com/jasonpretavoine/Extel-HomeAssistant](https://github.com/jasonpretavoine/Extel-HomeAssistant)
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
-![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-2.0.1-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 This custom integration lets you control **Extel** and **Avidsen** motorized gates that use the **Umii** app directly from Home Assistant.
